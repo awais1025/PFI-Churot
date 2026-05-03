@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Models.Student>
+@{
+    int count = Model.Count();
+    List<Models.Student> students = Model.OrderByDescending(s => s.Year).ToList();
+    int index = 0;
+    string searchStr = ViewBag.Search != null ? ViewBag.Search.ToString().ToLower() : "";
+}
+
+@while (index < count)
+{
+    var currentStudent = students[index];
+    int currentYear = currentStudent.Year;
+
+    string open = index == 0 ? "open" : "";
+
+    <details @open id="students_details_@currentYear" class="cohort-details">
+        <summary class="cohort-summary">Cohorte @currentYear</summary>
+        @do
+        {
+            var student = students[index];
+
+            <a href="/Students/Details/@student.Id" class="student-row">
+                <div class="student-code">@student.Code</div>
+                <div class="student-name">@student.FullName</div>
+            </a>
+
+            index++;
+
+        } while (index < count && students[index].Year == currentYear);
+    </details>
+}

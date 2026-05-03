@@ -72,7 +72,10 @@ namespace DAL
             try
             {
                 using (var sr = new StreamReader(FilePath))
-                    dataList = JsonConvert.DeserializeObject<List<T>>(sr.ReadToEnd());
+                {
+                    string fileContent = sr.ReadToEnd();
+                    dataList = JsonConvert.DeserializeObject<List<T>>(fileContent);
+                }
             }
             catch (Exception e)
             {

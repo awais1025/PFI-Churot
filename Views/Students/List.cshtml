@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Liste des étudiants";
+    Session["Search"] = true;
+}
+
+<!-- Le conteneur où la vue partielle (GetStudents) sera injectée par AJAX -->
+<!-- CORRECTION : L'ID est maintenant "studentsContainer" -->
+<div id="studentsContainer" style="margin-top: 15px;">
+    <!-- Le HTML de GetStudents.cshtml apparaîtra ici -->
+</div>
+
+<!-- La section de la session courante en bas -->
+<div style="border: 1px solid #ddd; padding: 10px; border-radius: 4px; margin-top: 20px; background-color: #f8f9fa;">
+    <strong>Session courante : @Models.NextSession.Caption</strong>
+</div>
+
+<!-- Les scripts AJAX et de persistance -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // 1. Charger la liste immédiatement
+            UpdateStudentsList();
+
+            // 2. Rafraîchissement périodique
+            setInterval(UpdateStudentsList, 5000);
+
+            // 3. OUVRE ET FERME LA BARRE DE RECHERCHE AU CLIC SUR LA LOUPE
+            $("#toggleSearch").click(function () {
+                $("#searchContainer").slideToggle();
+                $("#searchInput").focus();
+            });
+
+            // 4. Empêcher la touche "Enter" de recharger la page
+            $("#searchForm").submit(function(e){
+                e.preventDefault();
+            });
+
+            // 5. Mettre à jour à chaque touche tapée dans la recherche
+            $("#searchInput").on("keyup search", function () {
+                UpdateStudentsList();
+            });
+
+            // 6. Sauvegarder l'état des balises <details>
+            $(document).on('toggle', 'details', function () {
+                let details_dom = $(this)[0];
+                if (details_dom != undefined && details_dom.id) {
+                    localStorage.setItem(details_dom.id, details_dom.open);
+                }
+            });
+        });
+
+     function UpdateStudentsList() {
+    let search = $("#searchInput").val();
+
+    $.ajax({
+        url: '@Url.Action("GetStudents", "Students")',
+        type: 'GET',
+        data: { searchString: search },
+        success: function (partialViewResult) {
+            if (partialViewResult.trim() !== "") {
+                $("#studentsContainer").html(partialViewResult);
+                RestoreDetailsState();
+            }
+        }
+    });
+}
+
+        // Fonction de restauration
+        function RestoreDetailsState() {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.indexOf("details") > -1) {
+                    let details_dom = $("#" + key)[0];
+                    if (details_dom != undefined) {
+                        details_dom.open = (localStorage.getItem(key) == "true");
+                    }
+                }
+            }
+        }
+    </script>
+}

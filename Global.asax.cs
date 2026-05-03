@@ -28,17 +28,9 @@ namespace Registrar
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-            /*
-            appTimer = new Timer();
-            appTimer.Interval = 10000000; // 10 second in milliseconds
-            appTimer.Elapsed += new ElapsedEventHandler(OnTimerElapsed);
-            appTimer.Enabled = true; // Start the timer
-            */
+            
             // cleaning
-            foreach (var login in DB.Logins.ToList().Copy())
-            {
-                if (login.User == null) DB.Logins.Delete(login.Id);
-            }
+            
             foreach (var uvEmail in DB.UnverifiedEmails.ToList().Copy())
             {
                 if (uvEmail.User == null) DB.UnverifiedEmails.Delete(uvEmail.Id);
@@ -51,17 +43,12 @@ namespace Registrar
             {
                 if (@event.User == null) DB.RenewPasswordCommands.Delete(@event.Id);
             }
-       
+            foreach (var login in DB.Logins.ToList().Copy())
+            {
+                if (login.User == null) DB.Logins.Delete(login.Id);
+            }
         }
-        /*
-        private static void OnTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            // Your cyclic function code goes here
-            // Be careful with threading, as this runs on a thread pool thread
-            System.Diagnostics.Debug.WriteLine("Cyclic function ran at: " + DateTime.Now);
-            
-        }*/
-
+    
         protected void Session_Start()
         {
             // do session intialisations

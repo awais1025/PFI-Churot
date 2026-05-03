@@ -28,7 +28,8 @@ namespace Registrar
                         "~/Content/media.css",
                         "~/Content/Icons.css",
                         "~/Content/image-control.css",
-                        "~/Content/jqui-custom-datepicker.css"));
+                        "~/Content/jqui-custom-datepicker.css",
+                        "~/Content/studentList.css"));
         }
     }
 }
