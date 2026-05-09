@@ -17,6 +17,8 @@ namespace Models
         public DateTime BirthDate { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+
+        
         [JsonIgnore] public string FullName => LastName + " " + FirstName;
         [JsonIgnore] public string Caption => Code + " " + LastName + " " + FirstName;
         [JsonIgnore] public int Year => int.Parse(Code.Substring(0, 4));

@@ -99,9 +99,7 @@ details {
         block-size: auto;
     }
 
-    & div {
-        margin-left: 6px;
-    }
+    
 }
 summary {
     background: lightgray;

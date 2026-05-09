@@ -14,6 +14,7 @@ namespace Controllers
         // GET: Student
         private void InitSessionVariables()
         {
+            if (Session["CurrentStudentId"] == null) Session["CurrentStudentId"] = 0;
         }
         public ActionResult List()
         {
@@ -35,8 +36,8 @@ namespace Controllers
                         searchString = searchString.ToLower();
                         students = students.Where(s => s.FullName.ToLower().Contains(searchString) || s.Code.ToLower().Contains(searchString)).ToList();
                     }
-
-                    Session["StudentsYearsList"] = students.Select(s => s.Year).Distinct().ToList();
+                    var yearsList = students.Select(s => s.Year).Distinct().ToList();
+                    Session["StudentsYearsList"] = yearsList;
                     ViewBag.Search = searchString;
 
                     return PartialView(students);
@@ -49,6 +50,34 @@ namespace Controllers
                 Debug.WriteLine(ex.Message);
                 return Content("Erreur interne " + ex.Message);
             }
+        }
+
+        public ActionResult GetStudentDetails(bool forceRefresh = false)
+        {
+            try
+            {
+                InitSessionVariables();
+                int studentId = (int)Session["CurrentStudentId"];
+                Student student = DB.Students.Get(studentId);
+                if(DB.Users.HasChanged || DB.Students.HasChanged || DB.Teachers.HasChanged || DB.Courses.HasChanged || forceRefresh)
+                {
+                    if (student != null)
+                    {
+                        return PartialView(student);
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return Content("Erreur interne " + ex.Message);
+            }
+        }
+        public ActionResult Details(int id)
+        {
+            InitSessionVariables();
+            Session["CurrentStudentId"] = id;
+            return View();
         }
     }
 }   

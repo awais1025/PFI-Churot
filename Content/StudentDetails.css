@@ -1,0 +1,81 @@
+/* Student Details Container */
+.student-details-container {
+    margin-top: 25px;
+}
+
+/* Student Info Section */
+.student-info {
+    line-height: 1.8;
+    color: #333;
+    border-top: none;
+    margin-top: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.student-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.student-info-item i {
+    width: 25px;
+    text-align: center;
+}
+
+.student-info-item a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.student-info-item a:hover {
+    text-decoration: underline;
+}
+
+/* Summary Styles */
+.student-details-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+/* Sections Title */
+.student-sections-title {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Courses List */
+.courses-list-container {
+    border: 1px solid #ddd;
+    border-top: none;
+    padding: 5px 0;
+}
+
+.course-row {
+    display: block;
+}
+
+.course-session {
+    color: #999;
+}
+
+.course-code {
+    color: #0056b3;
+    font-weight: 500;
+}
+
+.course-title {
+    color: #333;
+}
+
+/* Empty State */
+.empty-courses-message {
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    color: #777;
+    background-color: #fafafa;
+}

@@ -1,9 +1,9 @@
-﻿@{
-    ViewBag.Title = "Liste des étudiants";
+@{
+    ViewBag.Title = "Liste des cours";
     Session["Search"] = true;
 }
 
-<div id="studentsContainer"></div>
+<div id="coursesContainer"></div>
 
 
 
@@ -38,8 +38,8 @@
         $(() => {
             let studentsListAutoRefreshPanel =
                 new AutoRefreshedPanel(
-                    "studentsContainer",
-                    "/Students/GetStudents",
+                    "coursesContainer",
+                    "/Courses/GetCourses",
                     5,
                     RestoreDetailsState);
 

@@ -1,0 +1,23 @@
+<!-- Le conteneur où on injecte la vue partielle -->
+
+@model Models.Student
+@{ 
+    ViewBag.PageTitle = "Détails";
+}
+
+<div id="studentDetailsContainer">
+    <!-- GetStudentDetails.cshtml va s'afficher ici -->
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            let studentDetailsAutoRefreshPanel =
+                new AutoRefreshedPanel(
+                    "studentDetailsContainer",
+                    "/Students/GetStudentDetails",
+                    5
+                );
+        })
+    </script>
+}

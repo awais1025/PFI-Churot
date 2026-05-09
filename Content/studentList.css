@@ -4,7 +4,6 @@
 }
 
 .cohort-summary {
-    background-color: #e9ecef;
     font-weight: bold;
     border: 1px solid #ced4da;
     border-radius: 4px;
@@ -12,10 +11,8 @@
 }
 
 .student-row {
-    display: grid;
     grid-template-columns: 100px auto; 
     padding: 6px 12px;
-    border-bottom: 1px solid #f1f1f1;
     text-decoration: none;
     color: #333;
 }

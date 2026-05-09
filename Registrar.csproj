@@ -182,6 +182,7 @@
     <Content Include="Content\popup.css" />
     <Content Include="Content\Selections.css" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\StudentDetails.css" />
     <Content Include="Content\studentList.css" />
     <Content Include="Content\Students.css" />
     <Content Include="Content\Teachers.css" />
@@ -228,10 +229,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebApp.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Courses\" />
-    <Folder Include="Views\Teacher\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="App_Data\Events.json" />
@@ -243,6 +241,8 @@
     <Content Include="App_Data\Courses.json" />
     <Content Include="App_Data\Students.json" />
     <Content Include="App_Data\Teachers.json" />
+    <Content Include="App_Data\Registrations.json" />
+    <Content Include="App_Data\Allocations.json" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
@@ -262,6 +262,12 @@
     <None Include="Properties\PublishProfiles\Wikimedia-2026 - Web Deploy.pubxml" />
     <Content Include="Views\Students\List.cshtml" />
     <Content Include="Views\Students\GetStudents.cshtml" />
+    <Content Include="Views\Students\GetStudentDetails.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Teachers\GetTeachers.cshtml" />
+    <Content Include="Views\Teachers\List.cshtml" />
+    <Content Include="Views\Courses\GetCourses.cshtml" />
+    <Content Include="Views\Courses\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

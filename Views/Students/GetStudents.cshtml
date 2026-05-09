@@ -1,31 +1,27 @@
 ﻿@model IEnumerable<Models.Student>
 @{
-    int count = Model.Count();
-    List<Models.Student> students = Model.OrderByDescending(s => s.Year).ToList();
-    int index = 0;
-    string searchStr = ViewBag.Search != null ? ViewBag.Search.ToString().ToLower() : "";
+
+    /* List of years wich has at least one subscribed student */
+    var yearsList = ((List<int>)Session["StudentsYearsList"]).OrderByDescending(i => i);
 }
-
-@while (index < count)
+@foreach (int year in yearsList)
 {
-    var currentStudent = students[index];
-    int currentYear = currentStudent.Year;
-
-    string open = index == 0 ? "open" : "";
-
-    <details @open id="students_details_@currentYear" class="cohort-details">
-        <summary class="cohort-summary">Cohorte @currentYear</summary>
-        @do
-        {
-            var student = students[index];
-
-            <a href="/Students/Details/@student.Id" class="student-row">
-                <div class="student-code">@student.Code</div>
-                <div class="student-name">@student.FullName</div>
-            </a>
-
-            index++;
-
-        } while (index < count && students[index].Year == currentYear);
-    </details>
+    var students = Model.Where(s => s.Year == year);
+    if (students.Count() > 0)
+    {
+        <details id="student_details_@year">
+            <summary>Cohorte @year </summary>
+            @foreach (var item in students)
+            {
+                <div class="StudentListLayout">
+                    <a href="@Url.Action("Details", new { id = item.Id })">
+                        <div style="display:flex">
+                            <span class="studentCode">@item.Code</span>
+                            <div class="studentName">@item.FullName</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </details>
+    }
 }
