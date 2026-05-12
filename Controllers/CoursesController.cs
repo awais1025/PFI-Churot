@@ -1,16 +1,24 @@
 ﻿using DAL;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
 
 namespace Controllers
 {
     public class CoursesController : Controller
     {
-        private void InitSessionVariables() { }
+        private void InitSessionVariables()
+        {
+            if (Session["CurrentCourseId"] == null)
+            {
+                Session["CurrentCourseId"] = 0;
+            }
+        }
 
 
 
@@ -47,6 +55,35 @@ namespace Controllers
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                return Content("Erreur interne " + ex.Message);
+            }
+        }
+
+        public ActionResult Details(int id)
+        {
+            InitSessionVariables();
+            Session["CurrentCourseId"] = id;
+            return View();
+        }
+
+        public ActionResult GetCourseDetails(bool forceRefresh = false)
+        {
+            try
+            {
+                InitSessionVariables();
+                int courseId = (int)Session["CurrentCourseId"];
+                Course course = DB.Courses.Get(courseId);
+                if (DB.Users.HasChanged || DB.Students.HasChanged || DB.Teachers.HasChanged || DB.Courses.HasChanged || forceRefresh)
+                {
+                    if (course != null)
+                    {
+                        return PartialView(course);
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
                 return Content("Erreur interne " + ex.Message);
             }
         }

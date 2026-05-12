@@ -268,6 +268,8 @@
     <Content Include="Views\Teachers\List.cshtml" />
     <Content Include="Views\Courses\GetCourses.cshtml" />
     <Content Include="Views\Courses\List.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\GetCourseDetails.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
