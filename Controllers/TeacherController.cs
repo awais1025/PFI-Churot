@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,9 @@ namespace Controllers
 {
     public class TeachersController : Controller
     {
-        private void InitSessionVariables() { }
+        private void InitSessionVariables() {
+            if (Session["CurrentTeacherId"] == null) Session["CurrentTeacherId"] = 0;
+        }
 
 
         public ActionResult List()
@@ -44,6 +47,37 @@ namespace Controllers
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                return Content("Erreur interne " + ex.Message);
+            }
+        }
+
+        public ActionResult Details(int id)
+        {
+            InitSessionVariables();
+            Session["CurrentTeacherId"] = id;
+            return View();
+        }
+
+        public ActionResult GetTeacherDetails(bool forceRefresh = false)
+        {
+            try
+            {
+                InitSessionVariables();
+                int teacherId = (int)Session["CurrentTeacherId"];
+                Teacher teacher = DB.Teachers.Get(teacherId);
+
+                if (DB.Users.HasChanged || DB.Teachers.HasChanged ||
+                    DB.Allocations.HasChanged || DB.Courses.HasChanged || forceRefresh)
+                {
+                    if (teacher != null)
+                    {
+                        return PartialView(teacher);
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
                 return Content("Erreur interne " + ex.Message);
             }
         }
